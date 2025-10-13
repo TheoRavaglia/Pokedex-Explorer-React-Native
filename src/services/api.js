@@ -46,7 +46,17 @@ export const fetchPokemonList = async (offset = 0, limit = 20) => {
  */
 export const fetchPokemonByNameOrId = async (nameOrId) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/pokemon/${nameOrId.toLowerCase()}`);
+    // Garantir que nameOrId seja uma string válida (aceitar números também)
+    if (nameOrId === undefined || nameOrId === null) {
+      throw new Error('Nome ou ID inválido');
+    }
+
+    const query = String(nameOrId).trim().toLowerCase();
+    if (!query) {
+      throw new Error('Nome ou ID inválido');
+    }
+
+    const response = await axios.get(`${API_BASE_URL}/pokemon/${encodeURIComponent(query)}`);
     return {
       id: response.data.id,
       name: response.data.name,
@@ -59,7 +69,11 @@ export const fetchPokemonByNameOrId = async (nameOrId) => {
     };
   } catch (error) {
     console.error('Erro ao buscar Pokémon:', error);
-    throw new Error('Pokémon não encontrado. Verifique o nome ou número.');
+    // Se a API retornou 404, informar que não encontrou; senão propagar mensagem mais descritiva
+    if (error.response && error.response.status === 404) {
+      throw new Error('Pokémon não encontrado. Verifique o nome ou número.');
+    }
+    throw new Error(error.message || 'Pokémon não encontrado. Verifique o nome ou número.');
   }
 };
 

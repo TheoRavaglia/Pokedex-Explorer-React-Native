@@ -76,16 +76,8 @@ export default function HomeScreen({ navigation }) {
       setLoading(true);
       setError(null);
       const pokemon = await fetchPokemonByNameOrId(searchQuery);
-      
-      // Navegar para tela de detalhes (quando implementada)
-      // navigation.navigate('Details', { pokemon });
-      
-      // Por enquanto, apenas mostra um alerta
-      Alert.alert(
-        'Pokémon Encontrado!',
-        `${pokemon.name.toUpperCase()} (#${pokemon.id})\n\nTipos: ${pokemon.types.join(', ')}\n\nNavegação para detalhes será implementada em breve!`
-      );
-      
+    
+      navigation.navigate('Details', { pokemonID : pokemon.id});     
       setSearchQuery('');
     } catch (err) {
       setError(err.message);
@@ -102,12 +94,8 @@ export default function HomeScreen({ navigation }) {
     <TouchableOpacity
       style={styles.pokemonCard}
       onPress={() => {
-        // Navegação para tela de detalhes (a ser implementada)
-        // navigation.navigate('Details', { pokemon: item });
-        Alert.alert(
-          'Em Desenvolvimento',
-          `Você selecionou ${item.name}!\n\nA tela de detalhes será implementada pelo grupo.`
-        );
+
+        navigation.navigate('Details', { pokemonID: item.id });
       }}
     >
       <Image source={{ uri: item.image }} style={styles.pokemonImage} />
