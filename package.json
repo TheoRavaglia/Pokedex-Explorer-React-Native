@@ -4,7 +4,9 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
+    "android": "expo start --android --device Small_Phone",
+    "android:small": "expo start --android --device Small_Phone",
+    "android:medium": "expo start --android --device Medium_Phone_API_36.0",
     "ios": "expo start --ios",
     "web": "expo start --web"
   },

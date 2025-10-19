@@ -1,5 +1,10 @@
 # Pokédex Explorer - React Native
 
+# Alunos:
+Ítalo de Andrade
+Otávio murilo Ribas
+Theo Ravaglia
+
 Um aplicativo de catálogo de Pokémon interativo desenvolvido com React Native e Expo.
 
 ## 🚀 Como executar

@@ -121,14 +121,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.title}>Pokédex Explorer</Text>
         <TouchableOpacity
           style={styles.favButton}
-          onPress={() => {
-            // Navegação para tela de favoritos (a ser implementada)
-            // navigation.navigate('Favorites');
-            Alert.alert(
-              'Em Desenvolvimento',
-              'A tela de favoritos será implementada pelo grupo!'
-            );
-          }}
+          onPress={() => navigation.navigate('Favorites')}
         >
           <Text style={styles.favButtonText}>⭐ Favoritos</Text>
         </TouchableOpacity>

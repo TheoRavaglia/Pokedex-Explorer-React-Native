@@ -11,11 +11,13 @@ import {
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { fetchPokemonByNameOrId } from '../services/api';
+import { useFavorites } from '../contexts/FavoritesContext';
 
 export default function DetailsScreen() {
   const route = useRoute();
   const navigation = useNavigation();
   const pokemonID = route?.params?.pokemonID;
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const [pokemon, setPokemon] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -96,6 +98,18 @@ export default function DetailsScreen() {
       <View style={styles.imageWrap}>
         <Image source={{ uri: pokemon.image }} style={styles.pokemonImage} />
       </View>
+
+      <TouchableOpacity
+        style={styles.favoriteButton}
+        onPress={() => toggleFavorite(pokemon)}
+      >
+        <Text style={styles.favoriteIcon}>
+          {isFavorite(pokemon.id) ? '⭐' : '☆'}
+        </Text>
+        <Text style={styles.favoriteText}>
+          {isFavorite(pokemon.id) ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
+        </Text>
+      </TouchableOpacity>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Tipos</Text>
@@ -255,5 +269,23 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: '#fff',
     fontWeight: 'bold'
-  }
+  },
+  favoriteButton: {
+    backgroundColor: '#EF5350',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+    borderRadius: 12,
+    marginVertical: 10,
+  },
+  favoriteIcon: {
+    fontSize: 24,
+    marginRight: 8,
+  },
+  favoriteText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
